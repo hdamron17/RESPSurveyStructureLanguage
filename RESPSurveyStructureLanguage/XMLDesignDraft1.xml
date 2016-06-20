@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<survey name="Structure Design Example">
+	<languages>
+		<language>en</language>
+	</languages>
+	
+	<import>math</import>
+	
+	<sensor type="hardware">
+		<name>temperature</name>
+		
+		<!-- Any item which will provide data when called 
+		can be classified as a sensor -->
+		<source>/dev/thermometer</source>
+		
+		<!-- This will vary largely between sensors 
+		depending on how they are set up-->
+		<return><call lang="Java">@source.getValue()</call></return>
+		
+		<!-- Default value for if the sensor is not available 
+		calls to the sensor will return null and cause problems 
+		if this is not provided -->
+		<default>25</default>
+	</sensor>
+	
+	<var name="random_var">
+		<value>@math.random()</value>
+	</var>
+	
+	<var name="rand_squared">
+		<value>@math.random() ^ 2</value>
+	</var>
+	
+	<funct name="add">
+		<param>operand1</param>
+		<param>operand2</param>
+	</funct>
+	
+	<block name="demographics" order="linear">
+		<question type="number">
+			<text lang="en">How old are you?</text>
+		</question>
+	</block>
+</survey>

@@ -1,0 +1,7 @@
+import math
+sensor "/dev/Thermometer"
+
+Survey {
+	name = "Alternate Design Draft 1";
+	languages = [en];
+	
