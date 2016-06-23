@@ -7,13 +7,15 @@
 		<language>es</language>
 	</languages>
 	
-	<!-- Scrpt language will most likely have to be javascript
+	<!-- Script language will most likely have to be javascript
 	for universality and especially for mobile applications -->
 	<script-default>python</script-default>
 	
+	<import name="np">numpy</import>
+	<import>math</import>
+	
 	<script>
-		import math
-		import numpy as np
+		print(np.arange(0,200,0.01))
 	</script>
 	
 	<sensor id="temperature" type="hardware">
@@ -50,6 +52,9 @@
 	<var id="rand_squared">
 		<value>math.random() ** 2</value>
 	</var>
+	
+	<!-- Functions are not going to be supported because 
+	they can be defined within scripts -->
 	
 	<!-- Example function to add two parameters -->
 	<funct id="add">
