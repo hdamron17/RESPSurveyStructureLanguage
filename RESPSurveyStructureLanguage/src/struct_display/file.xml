@@ -14,8 +14,16 @@
 	<import name="np">numpy</import>
 	<import>math</import>
 	
+	<funct id="example_method">
+		<param>var</param>
+		<body>
+			print("Example method works %d" % var)
+			return var ** 2
+		</body>
+	</funct>
+	
 	<script>
-		print(np.arange(0,200,0.01))
+		example_method(5)
 	</script>
 	
 	<sensor id="temperature" type="hardware">
@@ -60,13 +68,13 @@
 	<funct id="add">
 		<param>operand1</param>
 		<param>operand2</param>
-		<return>operand1 + operand2</return>
+		<body>return operand1 + operand2</body>
 	</funct>
 	
 	<!-- Function to put value in range [0,1) -->
 	<funct id="normalize">
 		<param>variable</param>
-		<return>1 / (1 + math.exp(variable))</return>
+		<body>return 1 / (1 + math.exp(variable))</body>
 	</funct>
 	
 	<!-- Default is order linear but included here for example -->
