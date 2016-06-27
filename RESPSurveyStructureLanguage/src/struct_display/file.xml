@@ -147,10 +147,6 @@
 				<text>My back hurts</text>
 			</choice>
 		</question>
-		
-		<question id="comfort">
-			
-		</question>
 	</block>
 	
 	<block id="child">

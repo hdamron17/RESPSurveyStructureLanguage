@@ -5,11 +5,14 @@ Created on Jun 23, 2016
 '''
 
 import xml.dom.minidom as parser
+import xml.etree.ElementTree as ET
 import string
 import re
 # import Tkinter as tk
 
-class Survey(object):
+from struct_base import * # @UnusedWildImport
+
+class DepricatedSurvey(object):
     def __init__(self, fileName, customFormat=None, defaultFormat="DefaultQuestionFormat.xml"):
         self.docTree = parser.parse(fileName).documentElement
         self.questionFormatTree = parser.parse(defaultFormat).documentElement
@@ -23,48 +26,21 @@ class Survey(object):
         scripts(self.docTree, scriptType)
         self.languages = languages(self.docTree)
         self.questionTree = questions(self.docTree, order='linear')
-        global variables
-        variables = dict()
-        variables['beans'] = 5
-        print(variables)
+        
+class Survey(object):
+    def __init__(self, fileName, customFormat=None, defaultFormat="DefaultQuestionFormat.xml"):
+        self.docTree = ET.parse(fileName).getroot()
+        self.questionFormatTree = ET.parse(defaultFormat).getroot()
+        self.customFormatTree = ET.parse(customFormat) if (customFormat != None) else None
+        self.scriptType = self.docTree.find("script-default")
+        if(self.scriptType == None):
+            # JavaScript will be default in later implementations
+            self.scriptTyp = "text/javascript"
+        self.languages = languages(self.docTree)
+        self.questionTree = questions(self.docTree, order="linear")
         
     def __repr__(self):
         return "{Survey %s, %s" % (self.languages, self.questionTree)
-        
-class Question(object):
-    # prereq and relevance are passed as strings to be evaluated multiple times
-    def __init__(self, text, prereq, relevanceStr):
-        self.text = text
-        self.response = None
-        self.prereq = prereq
-        self.relevanceStr = relevanceStr
-        
-    def answer(self, answer):
-        self.response = answer
-        
-    def filled(self):
-        return self.response != None
-    
-    def relevance(self):
-        if eval(self.prereq):
-            return eval(self.relevanceStr)
-        else:
-            return -1
-        
-    def __repr__(self):
-        return "(%s : %s)" (self.text, self.response)
-    
-        
-class QuestionBlock(object):
-    def __init__(self, order="linear"):
-        self.questions = []
-        self.order = order
-    
-    def add(self, question):
-        self.questions.append(question)
-    
-    def __repr__(self):
-        return "%s" % self.questions
     
 # Uses insertion sort algorithm using recalculated relevance
 def sortByRelevance(questionList):
@@ -88,7 +64,7 @@ def runScript(scriptElement, scriptType):
     whitespace = re.search("^\s*", script).group().lstrip("\r\n")
     
     script = string.replace(script, "\n%s" % whitespace, "\n")
-    exec(script)
+    exec(script) # @UndefinedVariable
     
 def imports(root, scriptType):
     assert scriptType == "python", "Scripting has not been enabled"
@@ -96,9 +72,9 @@ def imports(root, scriptType):
     for item in imports:
         namespace = item.getAttribute("name")
         if(namespace):
-            exec("global {1}\nimport {0} as {1}".format(item.firstChild.data, namespace))
+            exec("global {1}\nimport {0} as {1}".format(item.firstChild.data, namespace)) # @UndefinedVariable
         else:
-            exec("global {0}\nimport {0}".format(item.firstChild.data))
+            exec("global {0}\nimport {0}".format(item.firstChild.data)) # @UndefinedVariable
             
 def scripts(root, scriptType):
     assert scriptType == "python", "Scripting has not been enabled"
@@ -121,37 +97,66 @@ def functions(root, scriptType):
         body = string.replace(body, "\n%s" % whitespace, "\n\t")
         
         script = "%s%s" % (script, body.rstrip())
-        exec(script, globals())
+        exec(script, globals()) # @UndefinedVariable
         
         
+# def languages(root):
+#     languages = root.getElementsByTagName("languages")[0].getElementsByTagName("language")
+#     langs = []
+#     for item in languages:
+#         langs.append(item.firstChild.data)
+#     return langs
+
 def languages(root):
-    languages = root.getElementsByTagName("languages")[0].getElementsByTagName("language")
-    langs = []
-    for item in languages:
-        langs.append(item.firstChild.data)
-    return langs
+    languages = root.find("languages")
+    return languages.findall("language")
+
+# def questions(root, order="linear", lang=None):
+#     print("Loading %s" % root.getAttribute("id"))
+#     questions = QuestionBlock()
+#     for element in root.getElementsByTagName("*"):
+#         # TODO find a more efficient way to do this because this is dumb
+#         if element.parentNode == root:
+#             print(questions)
+#             if element.tagName == "question": 
+#                 print("Adding question")
+#                 questions.add(Question(element.getElementsByTagName("text"), 
+#                                        element.getElementsByTagName("prereq"), 
+#                                        element.getElementsByTagName("relevance")))
+#                 print("")
+#             if element.tagName == "block":
+#                 print("Adding block")
+#                 print("|%s|" % element.getElementsByTagName("question"))
+#                 newBlock = questions(element, element.getAttribute("order"), element.getAttribute("lang"))
+#                 print(newBlock)
+#                 questions.add(newBlock)
+#                 print("")
+#     return questions
 
 def questions(root, order="linear", lang=None):
-    print("Loading %s" % root.getAttribute("id"))
-    questions = QuestionBlock()
-    for element in root.getElementsByTagName("*"):
-        # TODO find a more efficient way to do this because this is dumb
-        if element.parentNode == root:
-            print(questions)
-            if element.tagName == "question": 
-                print("Adding question")
-                questions.add(Question(element.getElementsByTagName("text"), 
-                                       element.getElementsByTagName("prereq"), 
-                                       element.getElementsByTagName("relevance")))
-                print("")
-            if element.tagName == "block":
-                print("Adding block")
-                print("|%s|" % element.getElementsByTagName("question"))
-                newBlock = questions(element, element.getAttribute("order"), element.getAttribute("lang"))
-                print(newBlock)
-                questions.add(newBlock)
-                print("")
-    return questions
+    print("Loading %s" % root.attrib['id'])
+    block = QuestionBlock(order, lang)
+    for element in root:
+        if(element.tag == "question"):
+            prereqs = element.findall("prereq")
+            prereq = "True"
+            if(len(prereqs) > 0):
+                prereq = prereqs[0].text
+                for item in prereqs[1:-1]:
+                    prereq.join(" and %s" % item)
+            print("prereq : %s" % prereq)
+            relevanceNode = element.find("relevance")
+            relevance = relevanceNode.text if (relevanceNode != None) else None
+            block.add(Question(element.find("text").text, prereq, relevance))
+        if(element.tag == "block"):
+            print("Adding block")
+            newRoot = element
+            newOrder = element.attrib["order"] if "order" in element.attrib else "linear"
+            newLang = element.attrib["lang"] if ("lang" in element.attrib) else None
+            newBlock = questions(newRoot,  newOrder, newLang)
+            block.add(newBlock)
+    print("Finished block : %s" % block)
+    return block
     
 def switch(value, dictionary, default=None):
     for item in dictionary:
@@ -160,6 +165,8 @@ def switch(value, dictionary, default=None):
     return default
 
 if __name__ == '__main__':
-    example = Survey("file.xml")
-    raw_input("Press enter to terminate...")
-    print(example)
+    testQTree = questions(ET.parse("file.xml").getroot(), order="linear", lang=None)
+    print("tree : %s" % testQTree)
+#     example = Survey("file.xml")
+#     raw_input("Press enter to terminate...")
+#     print(example)
