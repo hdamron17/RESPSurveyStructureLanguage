@@ -8,13 +8,19 @@ import xml.dom.minidom as parser
 import xml.etree.ElementTree as ET
 import string
 import re
+from importlib import import_module
 # import Tkinter as tk
 
 from struct_base import * # @UnusedWildImport
 
 class DepricatedSurvey(object):
+    "Depreciated survey from using XML with DOM"
+    
     def __init__(self, fileName, customFormat=None, defaultFormat="DefaultQuestionFormat.xml"):
+        "Constructor for depricated survey"
+        
         self.docTree = parser.parse(fileName).documentElement
+        # TODO change questionFormatTree and CustomFormatTree to load modules from path instead of XML files
         self.questionFormatTree = parser.parse(defaultFormat).documentElement
         self.customFormatTree = parser.parse(customFormat).documentElement if (customFormat != None) else None
         scriptType = self.docTree.getElementsByTagName("script-default")[0].firstChild.data
@@ -28,7 +34,14 @@ class DepricatedSurvey(object):
         self.questionTree = questions(self.docTree, order='linear')
         
 class Survey(object):
+    "Survey class to house the XML structure of the document for processing"
+    
     def __init__(self, fileName, customFormat=None, defaultFormat="DefaultQuestionFormat.xml"):
+        """Loads the XML document into the structure along with custom questions and the default questions
+        
+        :param fileName: absolute or relative path to the question structure (with .ssl extension)
+        :param customFormat: path to """
+        
         self.docTree = ET.parse(fileName).getroot()
         self.questionFormatTree = ET.parse(defaultFormat).getroot()
         self.customFormatTree = ET.parse(customFormat) if (customFormat != None) else None
