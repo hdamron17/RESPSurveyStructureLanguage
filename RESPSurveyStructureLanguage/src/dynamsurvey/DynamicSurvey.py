@@ -9,8 +9,6 @@ and communicates with a display program via local protocols
 @author: hdamron
 '''
 
-from collections import Iterable
-
 class Survey(object):
     """
     Survey tree made up of question blocks containing questions
@@ -75,12 +73,9 @@ def yieldfrom(item):
             yield sub_item
             
 def tree_display_gen(root):
-    str_repr = root.id()
-    for item, i in zip(root, range(0, len(root))):
-        str_repr.join(branch_gen(item, i < len(root) - 1))
-    return str_repr
+    return branch_gen(root)
     
-def branch_gen(element, hasNext, prefix=""):
+def branch_gen(element, tabs=0):
     """
     Creates a string tree display
     
@@ -89,23 +84,27 @@ def branch_gen(element, hasNext, prefix=""):
     :return: returns recursive string representation of branch and sub branches
     
     main
-     |-branch
-     |  |-sub branch
-     |     |-Leaf
-     |     |-Leaf
-     |-branch
-     |  |-sub branch
-     |  |  |-sub sub branch
-     |  |-sub branch
+     |- branch
+     |  |- sub branch
+     |     |- Leaf
+     |     |- Leaf
+     |- branch
+     |  |- sub branch
+     |  |  |- sub sub branch
+     |  |-  sub branch
      |-branch
     """    
-    str_repr = "%s-%s\n" % (prefix, element.id())
-    if not isinstance(element, MyTestIterable): # TODO Change to QuestionBlock
+    print(tabs)
+    if isinstance(element, MyTestIterable):
+        str_repr = ""
+        for sub in element:
+            print("   " * tabs)
+            print(sub)
+            str_repr = str_repr.join("   " * tabs)
+            str_repr = str_repr.join(branch_gen(element, tabs + 1))
         return str_repr
-    new_prefix = prefix.join("  |")
-    for item, i in zip(element[:-1], range(len(element))):
-        str_repr.join(branch_gen(item, i < len(element) - 1), new_prefix)
-    return str_repr
+    else:
+        return ("\t" * tabs).join(element)
                     
 class MyTestIterable(object):
     def __init__(self, name, *args):
@@ -119,6 +118,9 @@ class MyTestIterable(object):
     def __len__(self):
         return len(self.items)
     
+    def __repr__(self):
+        return self.name
+    
     def id(self):
         return self.name
 
@@ -126,6 +128,19 @@ class Question(object):
     # TODO
     pass
 
+def disp(element, tabs=0):
+    msg = ""
+    for item in element:
+        if isinstance(item, MyTestIterable):
+            prefix = "   " * tabs
+#             if(disp(item, tabs + 1) is None):
+#                 print("#    %s of type %s produces None" % (item, type(item).__name__))
+            msg = msg.join("%s%s\n%s" % (prefix, item, disp(item, tabs + 1)))
+        else:
+            prefix = "   " * tabs
+            msg = msg.join("%s%s" % (prefix, item))
+    return msg
+            
 if __name__ == '__main__':
     test_list = MyTestIterable("root", 4, 9, 9, 
                                MyTestIterable("branch1", "st", 
@@ -135,4 +150,9 @@ if __name__ == '__main__':
                                                              "|"), "ing"), 9, 7)
 #     for thing in yieldfrom(test_list):
 #         print(thing)
-    print(tree_display_gen(test_list))
+#     for item in test_list:
+#         print(item)
+#     print(tree_display_gen(test_list))
+    print(test_list.id())
+    disp(test_list, 1)
+    

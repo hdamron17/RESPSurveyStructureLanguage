@@ -8,7 +8,6 @@ import xml.dom.minidom as parser
 import xml.etree.ElementTree as ET
 import string
 import re
-from importlib import import_module
 # import Tkinter as tk
 
 from struct_base import * # @UnusedWildImport
