@@ -9,6 +9,8 @@ and communicates with a display program via local protocols
 @author: hdamron
 '''
 
+import xml.etree.ElementTree as ET
+
 class Survey(object):
     """
     Survey tree made up of question blocks containing questions
@@ -18,7 +20,7 @@ class Survey(object):
         """
         Creates the survey tree from path to XML survey structure
         
-        :param survey_path: relative or absolute path to XML file (.ssl extension)
+        :param survey_path: relative or absolute path to XML file (.ssl)
         :return: returns an instance of the survey class based on the file
         """
         
@@ -29,17 +31,25 @@ class Survey(object):
         self.mandatory_threshold = "TODO"
         
         #: root of question tree (instance of QuestionBlock)
-        self.question_tree = "TODO"
+        self.question_tree = load_questions(docTree)
         
-    def __repr__(self):
         """
-        Creates string representation of survey
-         
-        Formatted in a tree showing the id's of each question and question block
+        !!! Lots of stuff to do here !!!
         """
-        return tree_display_gen(self.question_tree)
+        
+#         TODO __repr__()
+#     def __repr__(self):
+#         """
+#         Creates string representation of survey
+#          
+#         Formatted in a tree showing the id's of each question and question block
+#         """
+#         return tree_display_gen(self.question_tree)
     
     def __iter__(self):
+        """
+        Piggy backs on recursive yieldfrom() to create linear iterator
+        """
         for item in yieldfrom(self.question_tree):
             yield item
     
@@ -47,6 +57,32 @@ class Survey(object):
         """
         Loads the question tree from the root element of the XML tree
         """
+        # TODO load questions from XML structure into the survey class
+        pass
+    
+    def search(self, question_id):
+        """
+        Gets question and index by question id
+        """
+        index = 0
+        for item in self:
+            if item.id() == question_id:
+                return item, index
+            index += 1
+            
+    def get(self, index):
+        """
+        Gets question at the specified index in the tree or None otherwise
+        
+        :param index: index of question in linear shape
+        :return: returns the question
+        """
+        i = index - 1
+        for item in self:
+            if i == 0:
+                return item
+            i -= 1
+        return None
         
     def canTerminate(self):
         """
@@ -65,8 +101,14 @@ class Survey(object):
     pass
 
 def yieldfrom(item):
+    """
+    Creates a linear iterator over tree shaped survey
+    
+    Called recursively    
+    :param item: root element of branch
+    """
     for sub_item in item:
-        if isinstance(sub_item, MyTestIterable):
+        if isinstance(sub_item, QuestionBlock):
             for sub_sub_item in yieldfrom(sub_item):
                 yield sub_sub_item
         else:
@@ -83,6 +125,7 @@ def branch_gen(element, tabs=0):
     :param prefix: string characters of upper level branches and tabs
     :return: returns recursive string representation of branch and sub branches
     
+    Desired return (not there yet):
     main
      |- branch
      |  |- sub branch
@@ -91,7 +134,7 @@ def branch_gen(element, tabs=0):
      |- branch
      |  |- sub branch
      |  |  |- sub sub branch
-     |  |-  sub branch
+     |  |- sub branch
      |-branch
     """    
     print(tabs)
@@ -105,8 +148,78 @@ def branch_gen(element, tabs=0):
         return str_repr
     else:
         return ("\t" * tabs).join(element)
-                    
-class MyTestIterable(object):
+
+class Question(object):
+    def __init__(self, element):
+        """
+        Constructor uses element from XML file
+        
+        :param element: XML element from parsing - must contain:
+            -question type
+            -text (XML element with question body)
+            -param: boolean script value
+                * True when parameters are fulfilled
+                * Defaults True if param is not included
+            -relevance: float script value
+                * All questions must be in similar range (preferred [0,1) )
+            -mandatory: float script value
+                * Relevance below which, question can be ignored
+            -other requirements depend on the type
+        """
+        
+        # Load question text (asserts that question has text element)
+        textNode = element.find("text")
+        assert (textNode != None), "Question must provide a text body"
+        self.text = textNode.text
+        
+        # Load relevance script (asserts that question has relevance element)
+        relevanceNode = element.find("relevance")
+        assert (relevanceNode != None), "Question must provide a relevance"
+        self.relevance = relevanceNode.text
+        
+        # Load prereqs if available or True if not
+        prereqs = element.findall("prereq")
+        self.prereq = "True"
+        if(len(prereqs) > 0):
+            self.prereq = prereqs[0].text
+            for item in prereqs[1:-1]:
+                self.prereq.join(" and %s" % item)
+        
+        mandatoryNode = element.find("mandatory")
+        if mandatoryNode != None:
+            mandatoryNode = mandatoryNode.text
+        
+        """
+        !! More to do here !!
+        """
+    
+    def relevance(self):
+        """
+        Returns the evaluated relevance of the question
+        """
+        return evaluate(self.relevance)
+    
+    def mandatory(self):
+        """
+        Returns the evaluated mandatory value of the question
+        """
+        return evaluate(self.mandatory)
+    
+    # TODO
+    pass
+
+class QuestionBlock(object):
+    # TODO
+    pass
+
+class Input(object):
+    # TODO
+    pass
+
+class MyTestIterable(QuestionBlock):
+    """
+    Class designed to test methods designed for QuestionBlock
+    """
     def __init__(self, name, *args):
         self.items = list(args)
         self.name = name
@@ -123,24 +236,43 @@ class MyTestIterable(object):
     
     def id(self):
         return self.name
-
-class Question(object):
-    # TODO
+    
+def evaluate(script):
+    """
+    Evaluates string script after replacing variables with usable values
+    
+    :return: Returns the result of the evaluation
+    """
+    # TODO Once you figure out how variables are going to be treated
     pass
 
 def disp(element, tabs=0):
+    print("- %s - beginning display" % tabs)
     msg = ""
     for item in element:
+        print "   " * tabs, # TODO this is Python 2.x syntax
+        print(item)
         if isinstance(item, MyTestIterable):
             prefix = "   " * tabs
 #             if(disp(item, tabs + 1) is None):
 #                 print("#    %s of type %s produces None" % (item, type(item).__name__))
-            msg = msg.join("%s%s\n%s" % (prefix, item, disp(item, tabs + 1)))
+            msg = msg.join("%s%s\n%s\n" % (prefix, item, disp(item, tabs + 1)))
         else:
             prefix = "   " * tabs
-            msg = msg.join("%s%s" % (prefix, item))
+            msg = msg.join("%s%s\n" % (prefix, item))
     return msg
-            
+
+def printdisp(element, tabs=0):
+    print("- %s - beginning display" % tabs)
+    for item in element:
+        print "   " * tabs,
+        print item
+        prefix = "   " * tabs
+        if isinstance(item, MyTestIterable):
+            print("%s%s\n%s\n" % (prefix, item.id(), disp(item, tabs + 1)))
+        else:
+            print("%s%s\n" % (prefix, item))
+
 if __name__ == '__main__':
     test_list = MyTestIterable("root", 4, 9, 9, 
                                MyTestIterable("branch1", "st", 
@@ -153,6 +285,8 @@ if __name__ == '__main__':
 #     for item in test_list:
 #         print(item)
 #     print(tree_display_gen(test_list))
-    print(test_list.id())
-    disp(test_list, 1)
+#     printdisp(test_list)
+#     disp(test_list, 1)
+    docTree = ET.parse("file.xml").getroot()
+    ET.dump(docTree)
     

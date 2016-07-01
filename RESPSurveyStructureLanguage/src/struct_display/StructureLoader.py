@@ -10,7 +10,7 @@ import string
 import re
 # import Tkinter as tk
 
-from struct_base import * # @UnusedWildImport
+# from struct_base import QuestionBlock, Question
 
 class DepricatedSurvey(object):
     "Depreciated survey from using XML with DOM"
