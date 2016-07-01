@@ -31,7 +31,7 @@ class Survey(object):
         self.mandatory_threshold = "TODO"
         
         #: root of question tree (instance of QuestionBlock)
-        self.question_tree = load_questions(docTree)
+        self.question_tree = self.load_questions(docTree)
         
         """
         !!! Lots of stuff to do here !!!

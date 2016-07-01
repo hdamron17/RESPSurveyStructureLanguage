@@ -6,11 +6,10 @@ Created on Jun 23, 2016
 
 import xml.dom.minidom as parser
 import xml.etree.ElementTree as ET
-import string
 import re
 # import Tkinter as tk
 
-# from struct_base import QuestionBlock, Question
+from struct_base.QuestionsList import QuestionBlock, Question
 
 class DepricatedSurvey(object):
     "Depreciated survey from using XML with DOM"
@@ -75,7 +74,7 @@ def runScript(scriptElement, scriptType):
     script = scriptElement.firstChild.data
     whitespace = re.search("^\s*", script).group().lstrip("\r\n")
     
-    script = string.replace(script, "\n%s" % whitespace, "\n")
+    script = script.replace("\n%s" % whitespace, "\n")
     exec(script) # @UndefinedVariable
     
 def imports(root, scriptType):
@@ -106,7 +105,7 @@ def functions(root, scriptType):
         body = "\n%s" % item.getElementsByTagName("body")[0].firstChild.data
         
         whitespace = re.search("^\s*", body).group().lstrip("\r\n")
-        body = string.replace(body, "\n%s" % whitespace, "\n\t")
+        body = body.replace("\n%s" % whitespace, "\n\t")
         
         script = "%s%s" % (script, body.rstrip())
         exec(script, globals()) # @UndefinedVariable
