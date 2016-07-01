@@ -250,24 +250,21 @@ def disp(element, tabs=0):
     print("- %s - beginning display" % tabs)
     msg = ""
     for item in element:
-        print "   " * tabs, # TODO this is Python 2.x syntax
-        print(item)
+        prefix = "   " * tabs
+        print("%s%s" % (prefix, item))
         if isinstance(item, MyTestIterable):
-            prefix = "   " * tabs
 #             if(disp(item, tabs + 1) is None):
 #                 print("#    %s of type %s produces None" % (item, type(item).__name__))
             msg = msg.join("%s%s\n%s\n" % (prefix, item, disp(item, tabs + 1)))
         else:
-            prefix = "   " * tabs
             msg = msg.join("%s%s\n" % (prefix, item))
     return msg
 
 def printdisp(element, tabs=0):
     print("- %s - beginning display" % tabs)
     for item in element:
-        print "   " * tabs,
-        print item
         prefix = "   " * tabs
+        print("%s%s" % (prefix, item))
         if isinstance(item, MyTestIterable):
             print("%s%s\n%s\n" % (prefix, item.id(), disp(item, tabs + 1)))
         else:
