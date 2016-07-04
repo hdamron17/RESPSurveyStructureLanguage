@@ -12,7 +12,7 @@ and communicates with a display program via local protocols
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
 
-class Survey(OrderedDict):
+class Survey(object):
     """
     Survey tree made up of question blocks containing questions
     """
@@ -25,14 +25,20 @@ class Survey(OrderedDict):
         :return: returns an instance of the survey class based on the file
         """
         
+        self.docTree = ET.parse(survey_path).getroot()
+        
         #: relevance threshold above which questions are relevant
         self.threshold = "TODO"
         
         #: relevance threshold below which questions can be eliminated entirely
         self.mandatory_threshold = "TODO"
         
-        #: root of question tree (instance of QuestionBlock)
-        self.question_tree = self.load_questions(docTree)
+        #: script-type and scope (both global)
+        global script_type, scope
+        script_type, scope = init_scripting(self.docTree)
+        
+        #: loads questions into root (instance of QuestionBlock)
+        self.questionTree = load_questions(self.docTree)
         
         """
         !!! Lots of stuff to do here !!!
@@ -53,13 +59,6 @@ class Survey(OrderedDict):
         """
         for item in yieldfrom(self.question_tree):
             yield item
-    
-    def load_questions(self, root):
-        """
-        Loads the question tree from the root element of the XML tree
-        """
-        # TODO load questions from XML structure into the survey class
-        pass
     
     def search(self, question_id):
         """
@@ -97,6 +96,29 @@ class Survey(OrderedDict):
         pass
     
     
+    
+    # TODO
+    pass
+
+def load_questions(self, root):
+        """
+        Loads the question tree from the root element of the XML tree
+        
+        :return: Returns a root element (instance of QuestionBlock containing
+                all elements in the tree)
+        """
+        # TODO load questions from XML structure into QuestionBlock instance
+        pass
+    
+def init_scripting(root):
+    """
+    Finds default-script tag and initializes scope based on the value
+    
+    :return: Returns (script-type string, scope)
+    """
+    script_type = root.find("script-default")
+    if script_type.lower() == "javascript":
+        scope = js2py.
     
     # TODO
     pass
@@ -209,7 +231,7 @@ class Question(object):
     # TODO
     pass
 
-class QuestionBlock(object):
+class QuestionBlock(OrderedDict):
     # TODO
     pass
 
