@@ -6,12 +6,13 @@ Created on Jun 30, 2016
 Interprets XML file containing survey structure (.ssl)
 and communicates with a display program via local protocols
 
-@author: hdamron
+@author: Hunter Damron
 '''
 
 import xml.etree.ElementTree as ET
+from collections import OrderedDict
 
-class Survey(object):
+class Survey(OrderedDict):
     """
     Survey tree made up of question blocks containing questions
     """
