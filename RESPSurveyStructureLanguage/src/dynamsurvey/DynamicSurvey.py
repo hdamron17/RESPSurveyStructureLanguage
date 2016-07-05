@@ -10,6 +10,7 @@ and communicates with a display program via local protocols
 '''
 
 import xml.etree.ElementTree as ET
+import js2py
 from collections import OrderedDict
 
 class Survey(object):
@@ -33,12 +34,11 @@ class Survey(object):
         #: relevance threshold below which questions can be eliminated entirely
         self.mandatory_threshold = "TODO"
         
-        #: script-type and scope (both global)
-        global script_type, scope
-        script_type, scope = init_scripting(self.docTree)
-        
         #: loads questions into root (instance of QuestionBlock)
         self.questionTree = load_questions(self.docTree)
+        
+        init_scripting(self.questionTree, self.genScope())
+            
         
         """
         !!! Lots of stuff to do here !!!
@@ -48,7 +48,7 @@ class Survey(object):
 #     def __repr__(self):
 #         """
 #         Creates string representation of survey
-#          
+#         
 #         Formatted in a tree showing the id's of each question and question block
 #         """
 #         return tree_display_gen(self.question_tree)
@@ -95,33 +95,63 @@ class Survey(object):
         # TODO
         pass
     
-    
-    
+    def genScope(self):
+        """
+        Generates scope of survey
+        
+        :return: Returns dictionary with names including
+            -Questions
+            -Variables
+            -Sensors
+        """
+        # TODO iterate through survey and get all mappings
+        pass
+        
     # TODO
     pass
 
-def load_questions(self, root):
-        """
-        Loads the question tree from the root element of the XML tree
-        
-        :return: Returns a root element (instance of QuestionBlock containing
-                all elements in the tree)
-        """
-        # TODO load questions from XML structure into QuestionBlock instance
+def load_questions(root):
+    """
+    Loads the question tree from the root element of the XML tree
+    
+    :return: Returns a root element (instance of QuestionBlock containing
+            all elements in the tree)
+    """
+    return _load_block(root)
+    
+def _load_block(branchElement):
+    """
+    Loads the elements in branchElement into the block
+    
+    :param branch_element: XML doc element to be loaded
+    :return: Returns a QuestionBlock containing the loaded branch
+    """
+    branch = QuestionBlock()
+    for item in branchElement:
         pass
-    
-def init_scripting(root):
-    """
-    Finds default-script tag and initializes scope based on the value
-    
-    :return: Returns (script-type string, scope)
-    """
-    script_type = root.find("script-default")
-    if script_type.lower() == "javascript":
-        scope = js2py.
-    
     # TODO
     pass
+    
+def init_scripting(root, param_scope):
+    """
+    Finds default-script tag and initializes context based on the value
+    
+    :param root: Document root (to find default-script)
+    :param scope: Dictionary containing scope for execution
+    :return: Returns (script-type string, scope)
+    """
+    #: script-type and scope (both global)
+    global script_type, scope
+    script_type = root.find("script-default")
+    scope = param_scope
+    
+    if script_type == "javascript":
+        global context
+        context = js2py.EvalJs(scope)
+    else:
+        assert script_type == "python" or script_type == None, \
+                "Unusable scripting language"
+        script_type = "python"
 
 def yieldfrom(item):
     """
@@ -131,43 +161,37 @@ def yieldfrom(item):
     :param item: root element of branch
     """
     for sub_item in item:
-        if isinstance(sub_item, QuestionBlock):
+        if isinstance(sub_item, dict):
             for sub_sub_item in yieldfrom(sub_item):
                 yield sub_sub_item
         else:
             yield sub_item
             
 def tree_display_gen(root):
-    return branch_gen(root)
-    
-def branch_gen(element, tabs=0):
     """
-    Creates a string tree display
+    Creates tree display of the root element
+    
+    Generates display recursively using _branch_gen()
+    :param root: root QuestionBlock of tree
+    :return: Returns a string representation of the tree
+    """
+    return _branch_gen(root)
+    
+def _branch_gen(element, tabs=0):
+    """
+    Inner recursive string generator
     
     :param element: element in tree structure (Question or QuestionBlock)
     :param prefix: string characters of upper level branches and tabs
     :return: returns recursive string representation of branch and sub branches
-    
-    Desired return (not there yet):
-    main
-     |- branch
-     |  |- sub branch
-     |     |- Leaf
-     |     |- Leaf
-     |- branch
-     |  |- sub branch
-     |  |  |- sub sub branch
-     |  |- sub branch
-     |-branch
-    """    
-    print(tabs)
+    """
     if isinstance(element, MyTestIterable):
         str_repr = ""
         for sub in element:
             print("   " * tabs)
             print(sub)
             str_repr = str_repr.join("   " * tabs)
-            str_repr = str_repr.join(branch_gen(element, tabs + 1))
+            str_repr = str_repr.join(_branch_gen(element, tabs + 1))
         return str_repr
     else:
         return ("\t" * tabs).join(element)
@@ -266,6 +290,10 @@ def evaluate(script):
     
     :return: Returns the result of the evaluation
     """
+    if script_type == "javascript":
+        return context.eval(script)
+    else:
+        return 
     # TODO Once you figure out how variables are going to be treated
     pass
 
