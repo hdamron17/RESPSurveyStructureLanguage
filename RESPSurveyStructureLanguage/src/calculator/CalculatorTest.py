@@ -38,6 +38,12 @@ def evaluate(math_string, scope=globals()):
             # can only apply to booleans
             not x  logical NOT
             x and y  logical AND
+        -reserves keywords:
+            not
+            and
+            or
+            true
+            false
     
     :param scope: dictionary of variables which mathString can access
     :return: returns numerical or boolean value of evaluated string
