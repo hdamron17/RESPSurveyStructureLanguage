@@ -6,11 +6,10 @@
 	<!-- (optional) default script type - only python is currently implemented -->
 	<script-default>python</script-default>
 
-	<!-- (optional, multiple) sensors to be used in calculations 
-		- sensor update possible values: 
-		* "start": only gets updated at startup 
-		* "use": system requests value only when needed 
-		* "constant": system updates value whenever	available -->
+	<!-- (optional, multiple) sensors to be used in calculations - sensor update 
+		possible values: * "start": only gets updated at startup remove -> * "use": 
+		system requests value only when needed * "constant": system updates value 
+		whenever available -->
 	<sensor id="{id}" update="{update}" />
 
 	<!-- (optional) script to be executed at startup to initialize any variables -->
@@ -20,35 +19,14 @@
 
 	<!-- (mandatory) global relevance threshold above which questions are included 
 		(can be overridden) -->
-	<treshold>{eval threshold}</treshold>
+	<threshold>{eval threshold}</threshold>
 
 	<!-- (mandatory) global relevance threshold below which questions can be 
 		ignored (can be overridden) -->
 	<mandatory>{eval mandatory threshold}</mandatory>
 
 	<!-- (mandatory, multiple) block of questions with common attributes -->
-	<block id="{id}"></block>
-	<!-- (optional, multiple) prerequisites - multiple prereqs are connected 
-		using logical AND -->
-	<prereq>{eval prereq}</prereq>
-
-	<!-- (optional) relevance (preferred in range [0,1) ) - defaults to 1 -->
-	<relevance>{eval relevance}</relevance>
-
-	<!-- @override (optional) relevance threshold above which questions are 
-		included (can be overridden) -->
-	<threshold>{eval threshold}</threshold>
-
-	<!-- @override (optional) relevance threshold below which questions can 
-		be ignored (can be overridden) -->
-	<mandatory>{eval mandatory threshold}</mandatory>
-
-	<!-- (mandatory, multiple) question in survey - type attribute evaluated 
-		by UI -->
-	<question id="{id}" type="{type defined in UI}">
-		<!-- (mandatory) question body text -->
-		<text>{Body text}</text>
-
+	<block id="{id}">
 		<!-- (optional, multiple) prerequisites - multiple prereqs are connected 
 			using logical AND -->
 		<prereq>{eval prereq}</prereq>
@@ -57,16 +35,19 @@
 		<relevance>{eval relevance}</relevance>
 
 		<!-- @override (optional) relevance threshold above which questions are 
-			included -->
+			included (can be overridden) -->
 		<threshold>{eval threshold}</threshold>
 
 		<!-- @override (optional) relevance threshold below which questions can 
-			be ignored -->
+			be ignored (can be overridden) -->
 		<mandatory>{eval mandatory threshold}</mandatory>
 
-		<!-- (optional) element(s) which depend on external variables - for example, 
-			choices which may be excluded if irrelevant -->
-		<element id="">
+		<!-- (mandatory, multiple) question in survey - type attribute evaluated 
+			by UI -->
+		<question id="{id}" type="{type defined in UI}">
+			<!-- (mandatory) question body text -->
+			<text>{Body text}</text>
+
 			<!-- (optional, multiple) prerequisites - multiple prereqs are connected 
 				using logical AND -->
 			<prereq>{eval prereq}</prereq>
@@ -74,14 +55,33 @@
 			<!-- (optional) relevance (preferred in range [0,1) ) - defaults to 1 -->
 			<relevance>{eval relevance}</relevance>
 
-			<!-- @override (optional) relevance threshold above which elements are 
+			<!-- @override (optional) relevance threshold above which questions are 
 				included -->
 			<threshold>{eval threshold}</threshold>
 
-			<!-- # All other elements here are passed on to UI if requirements are 
-				satisfied # -->
-		</element>
+			<!-- @override (optional) relevance threshold below which questions can 
+				be ignored -->
+			<mandatory>{eval mandatory threshold}</mandatory>
 
-		<!-- # All other elements here are passed on to UI # -->
-	</question>
+			<!-- (optional, multiple) element(s) which depend on external variables 
+				- for example, choices which may be excluded if irrelevant -->
+			<element id="{element id}">
+				<!-- (optional, multiple) prerequisites - multiple prereqs are connected 
+					using logical AND -->
+				<prereq>{eval prereq}</prereq>
+
+				<!-- (optional) relevance (preferred in range [0,1) ) - defaults to 1 -->
+				<relevance>{eval relevance}</relevance>
+
+				<!-- @override (optional) relevance threshold above which elements are 
+					included -->
+				<threshold>{eval threshold}</threshold>
+
+				<!-- # All other elements here are passed on to UI if requirements are 
+					satisfied # -->
+			</element>
+
+			<!-- # All other elements here are passed on to UI # -->
+		</question>
+	</block>
 </survey>

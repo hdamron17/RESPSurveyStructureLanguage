@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module DynamicSurvey</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>DynamicSurvey</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Chdamron1%5Cgit%5Crespsurveystructurelanguage%5Crespsurveystructurelanguage%5Csrc%5Cdynamsurvey%5Cdynamicsurvey.py">c:\users\hdamron1\git\respsurveystructurelanguage\respsurveystructurelanguage\src\dynamsurvey\dynamicsurvey.py</a></font></td></tr></table>
+    <p><tt>Dynamic&nbsp;survey&nbsp;base&nbsp;module<br>
+Created&nbsp;on&nbsp;Jun&nbsp;30,&nbsp;2016<br>
+&nbsp;<br>
+Interprets&nbsp;XML&nbsp;file&nbsp;containing&nbsp;survey&nbsp;structure&nbsp;(.ssl)<br>
+and&nbsp;communicates&nbsp;with&nbsp;a&nbsp;display&nbsp;program&nbsp;via&nbsp;local&nbsp;protocols<br>
+&nbsp;<br>
+@author:&nbsp;Hunter&nbsp;Damron</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="xml.etree.ElementTree.html">xml.etree.ElementTree</a><br>
+</td><td width="25%" valign=top><a href="js2py.html">js2py</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="DynamicSurvey.html#Input">Input</a>
+</font></dt><dt><font face="helvetica, arial"><a href="DynamicSurvey.html#Question">Question</a>
+</font></dt><dt><font face="helvetica, arial"><a href="DynamicSurvey.html#Survey">Survey</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="collections.html#OrderedDict">collections.OrderedDict</a>(<a href="builtins.html#dict">builtins.dict</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="DynamicSurvey.html#QuestionBlock">QuestionBlock</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="DynamicSurvey.html#MyTestIterable">MyTestIterable</a>
+</font></dt></dl>
+</dd>
+</dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Input">class <strong>Input</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="MyTestIterable">class <strong>MyTestIterable</strong></a>(<a href="DynamicSurvey.html#QuestionBlock">QuestionBlock</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Class&nbsp;designed&nbsp;to&nbsp;test&nbsp;methods&nbsp;designed&nbsp;for&nbsp;<a href="#QuestionBlock">QuestionBlock</a><br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="DynamicSurvey.html#MyTestIterable">MyTestIterable</a></dd>
+<dd><a href="DynamicSurvey.html#QuestionBlock">QuestionBlock</a></dd>
+<dd><a href="collections.html#OrderedDict">collections.OrderedDict</a></dd>
+<dd><a href="builtins.html#dict">builtins.dict</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="MyTestIterable-__init__"><strong>__init__</strong></a>(self, name, *args)</dt></dl>
+
+<dl><dt><a name="MyTestIterable-__iter__"><strong>__iter__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MyTestIterable-__len__"><strong>__len__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MyTestIterable-__repr__"><strong>__repr__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MyTestIterable-id"><strong>id</strong></a>(self)</dt></dl>
+
+<hr>
+Methods inherited from <a href="collections.html#OrderedDict">collections.OrderedDict</a>:<br>
+<dl><dt><a name="MyTestIterable-__delitem__"><strong>__delitem__</strong></a>(self, key, dict_delitem=&lt;slot wrapper '__delitem__' of 'dict' objects&gt;)</dt><dd><tt>od.<a href="#MyTestIterable-__delitem__">__delitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;del&nbsp;od[y]</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><tt>od.<a href="#MyTestIterable-__eq__">__eq__</a>(y)&nbsp;&lt;==&gt;&nbsp;od==y.&nbsp;&nbsp;Comparison&nbsp;to&nbsp;another&nbsp;OD&nbsp;is&nbsp;order-sensitive<br>
+while&nbsp;comparison&nbsp;to&nbsp;a&nbsp;regular&nbsp;mapping&nbsp;is&nbsp;order-insensitive.</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__ne__"><strong>__ne__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self!=value.</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><tt>Return&nbsp;state&nbsp;information&nbsp;for&nbsp;pickling</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__reversed__"><strong>__reversed__</strong></a>(self)</dt><dd><tt>od.<a href="#MyTestIterable-__reversed__">__reversed__</a>()&nbsp;&lt;==&gt;&nbsp;reversed(od)</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__setitem__"><strong>__setitem__</strong></a>(self, key, value, dict_setitem=&lt;slot wrapper '__setitem__' of 'dict' objects&gt;, proxy=&lt;built-in function proxy&gt;, Link=&lt;class 'collections._Link'&gt;)</dt><dd><tt>od.<a href="#MyTestIterable-__setitem__">__setitem__</a>(i,&nbsp;y)&nbsp;&lt;==&gt;&nbsp;od[i]=y</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__sizeof__"><strong>__sizeof__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MyTestIterable-clear"><strong>clear</strong></a>(self)</dt><dd><tt>od.<a href="#MyTestIterable-clear">clear</a>()&nbsp;-&gt;&nbsp;None.&nbsp;&nbsp;Remove&nbsp;all&nbsp;items&nbsp;from&nbsp;od.</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-copy"><strong>copy</strong></a>(self)</dt><dd><tt>od.<a href="#MyTestIterable-copy">copy</a>()&nbsp;-&gt;&nbsp;a&nbsp;shallow&nbsp;copy&nbsp;of&nbsp;od</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-items"><strong>items</strong></a>(self)</dt><dd><tt>D.<a href="#MyTestIterable-items">items</a>()&nbsp;-&gt;&nbsp;a&nbsp;set-like&nbsp;<a href="builtins.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;items</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-keys"><strong>keys</strong></a>(self)</dt><dd><tt>D.<a href="#MyTestIterable-keys">keys</a>()&nbsp;-&gt;&nbsp;a&nbsp;set-like&nbsp;<a href="builtins.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;keys</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-move_to_end"><strong>move_to_end</strong></a>(self, key, last=True)</dt><dd><tt>Move&nbsp;an&nbsp;existing&nbsp;element&nbsp;to&nbsp;the&nbsp;end&nbsp;(or&nbsp;beginning&nbsp;if&nbsp;last==False).<br>
+&nbsp;<br>
+Raises&nbsp;KeyError&nbsp;if&nbsp;the&nbsp;element&nbsp;does&nbsp;not&nbsp;exist.<br>
+When&nbsp;last=True,&nbsp;acts&nbsp;like&nbsp;a&nbsp;fast&nbsp;version&nbsp;of&nbsp;self[key]=self.<a href="#MyTestIterable-pop">pop</a>(key).</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-pop"><strong>pop</strong></a>(self, key, default=&lt;object object at 0x0000000003333070&gt;)</dt><dd><tt>od.<a href="#MyTestIterable-pop">pop</a>(k[,d])&nbsp;-&gt;&nbsp;v,&nbsp;remove&nbsp;specified&nbsp;key&nbsp;and&nbsp;return&nbsp;the&nbsp;corresponding<br>
+value.&nbsp;&nbsp;If&nbsp;key&nbsp;is&nbsp;not&nbsp;found,&nbsp;d&nbsp;is&nbsp;returned&nbsp;if&nbsp;given,&nbsp;otherwise&nbsp;KeyError<br>
+is&nbsp;raised.</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-popitem"><strong>popitem</strong></a>(self, last=True)</dt><dd><tt>od.<a href="#MyTestIterable-popitem">popitem</a>()&nbsp;-&gt;&nbsp;(k,&nbsp;v),&nbsp;return&nbsp;and&nbsp;remove&nbsp;a&nbsp;(key,&nbsp;value)&nbsp;pair.<br>
+Pairs&nbsp;are&nbsp;returned&nbsp;in&nbsp;LIFO&nbsp;order&nbsp;if&nbsp;last&nbsp;is&nbsp;true&nbsp;or&nbsp;FIFO&nbsp;order&nbsp;if&nbsp;false.</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-setdefault"><strong>setdefault</strong></a>(self, key, default=None)</dt><dd><tt>od.<a href="#MyTestIterable-setdefault">setdefault</a>(k[,d])&nbsp;-&gt;&nbsp;od.<a href="#MyTestIterable-get">get</a>(k,d),&nbsp;also&nbsp;set&nbsp;od[k]=d&nbsp;if&nbsp;k&nbsp;not&nbsp;in&nbsp;od</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-update"><strong>update</strong></a>(*args, **kwds)</dt><dd><tt>D.<a href="#MyTestIterable-update">update</a>([E,&nbsp;]**F)&nbsp;-&gt;&nbsp;None.&nbsp;&nbsp;Update&nbsp;D&nbsp;from&nbsp;mapping/iterable&nbsp;E&nbsp;and&nbsp;F.<br>
+If&nbsp;E&nbsp;present&nbsp;and&nbsp;has&nbsp;a&nbsp;.<a href="#MyTestIterable-keys">keys</a>()&nbsp;method,&nbsp;does:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;k&nbsp;in&nbsp;E:&nbsp;D[k]&nbsp;=&nbsp;E[k]<br>
+If&nbsp;E&nbsp;present&nbsp;and&nbsp;lacks&nbsp;.<a href="#MyTestIterable-keys">keys</a>()&nbsp;method,&nbsp;does:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(k,&nbsp;v)&nbsp;in&nbsp;E:&nbsp;D[k]&nbsp;=&nbsp;v<br>
+In&nbsp;either&nbsp;case,&nbsp;this&nbsp;is&nbsp;followed&nbsp;by:&nbsp;for&nbsp;k,&nbsp;v&nbsp;in&nbsp;F.<a href="#MyTestIterable-items">items</a>():&nbsp;D[k]&nbsp;=&nbsp;v</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-values"><strong>values</strong></a>(self)</dt><dd><tt>D.<a href="#MyTestIterable-values">values</a>()&nbsp;-&gt;&nbsp;an&nbsp;<a href="builtins.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;values</tt></dd></dl>
+
+<hr>
+Class methods inherited from <a href="collections.html#OrderedDict">collections.OrderedDict</a>:<br>
+<dl><dt><a name="MyTestIterable-fromkeys"><strong>fromkeys</strong></a>(iterable, value=None)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>OD.<a href="#MyTestIterable-fromkeys">fromkeys</a>(S[,&nbsp;v])&nbsp;-&gt;&nbsp;New&nbsp;ordered&nbsp;dictionary&nbsp;with&nbsp;keys&nbsp;from&nbsp;S.<br>
+If&nbsp;not&nbsp;specified,&nbsp;the&nbsp;value&nbsp;defaults&nbsp;to&nbsp;None.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="collections.html#OrderedDict">collections.OrderedDict</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="collections.html#OrderedDict">collections.OrderedDict</a>:<br>
+<dl><dt><strong>__hash__</strong> = None</dl>
+
+<hr>
+Methods inherited from <a href="builtins.html#dict">builtins.dict</a>:<br>
+<dl><dt><a name="MyTestIterable-__contains__"><strong>__contains__</strong></a>(self, key, /)</dt><dd><tt>True&nbsp;if&nbsp;D&nbsp;has&nbsp;a&nbsp;key&nbsp;k,&nbsp;else&nbsp;False.</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__ge__"><strong>__ge__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self&gt;=value.</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#MyTestIterable-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__gt__"><strong>__gt__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self&gt;value.</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__le__"><strong>__le__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self&lt;=value.</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__lt__"><strong>__lt__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self&lt;value.</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="MyTestIterable-get"><strong>get</strong></a>(...)</dt><dd><tt>D.<a href="#MyTestIterable-get">get</a>(k[,d])&nbsp;-&gt;&nbsp;D[k]&nbsp;if&nbsp;k&nbsp;in&nbsp;D,&nbsp;else&nbsp;d.&nbsp;&nbsp;d&nbsp;defaults&nbsp;to&nbsp;None.</tt></dd></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Question">class <strong>Question</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Question-__init__"><strong>__init__</strong></a>(self, element)</dt><dd><tt>Constructor&nbsp;uses&nbsp;element&nbsp;from&nbsp;XML&nbsp;file<br>
+&nbsp;<br>
+:param&nbsp;element:&nbsp;XML&nbsp;element&nbsp;from&nbsp;parsing&nbsp;-&nbsp;must&nbsp;contain:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-question&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-text&nbsp;(XML&nbsp;element&nbsp;with&nbsp;question&nbsp;body)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-param:&nbsp;boolean&nbsp;script&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;True&nbsp;when&nbsp;parameters&nbsp;are&nbsp;fulfilled<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Defaults&nbsp;True&nbsp;if&nbsp;param&nbsp;is&nbsp;not&nbsp;included<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-relevance:&nbsp;float&nbsp;script&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;All&nbsp;questions&nbsp;must&nbsp;be&nbsp;in&nbsp;similar&nbsp;range&nbsp;(preferred&nbsp;[0,1)&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-mandatory:&nbsp;float&nbsp;script&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Relevance&nbsp;below&nbsp;which,&nbsp;question&nbsp;can&nbsp;be&nbsp;ignored<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-other&nbsp;requirements&nbsp;depend&nbsp;on&nbsp;the&nbsp;type</tt></dd></dl>
+
+<dl><dt><a name="Question-mandatory"><strong>mandatory</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;evaluated&nbsp;mandatory&nbsp;value&nbsp;of&nbsp;the&nbsp;question</tt></dd></dl>
+
+<dl><dt><a name="Question-relevance"><strong>relevance</strong></a>(self)</dt><dd><tt>Returns&nbsp;the&nbsp;evaluated&nbsp;relevance&nbsp;of&nbsp;the&nbsp;question</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="QuestionBlock">class <strong>QuestionBlock</strong></a>(<a href="collections.html#OrderedDict">collections.OrderedDict</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="DynamicSurvey.html#QuestionBlock">QuestionBlock</a></dd>
+<dd><a href="collections.html#OrderedDict">collections.OrderedDict</a></dd>
+<dd><a href="builtins.html#dict">builtins.dict</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods inherited from <a href="collections.html#OrderedDict">collections.OrderedDict</a>:<br>
+<dl><dt><a name="QuestionBlock-__delitem__"><strong>__delitem__</strong></a>(self, key, dict_delitem=&lt;slot wrapper '__delitem__' of 'dict' objects&gt;)</dt><dd><tt>od.<a href="#QuestionBlock-__delitem__">__delitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;del&nbsp;od[y]</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><tt>od.<a href="#QuestionBlock-__eq__">__eq__</a>(y)&nbsp;&lt;==&gt;&nbsp;od==y.&nbsp;&nbsp;Comparison&nbsp;to&nbsp;another&nbsp;OD&nbsp;is&nbsp;order-sensitive<br>
+while&nbsp;comparison&nbsp;to&nbsp;a&nbsp;regular&nbsp;mapping&nbsp;is&nbsp;order-insensitive.</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__init__"><strong>__init__</strong></a>(*args, **kwds)</dt><dd><tt>Initialize&nbsp;an&nbsp;ordered&nbsp;dictionary.&nbsp;&nbsp;The&nbsp;signature&nbsp;is&nbsp;the&nbsp;same&nbsp;as<br>
+regular&nbsp;dictionaries,&nbsp;but&nbsp;keyword&nbsp;arguments&nbsp;are&nbsp;not&nbsp;recommended&nbsp;because<br>
+their&nbsp;insertion&nbsp;order&nbsp;is&nbsp;arbitrary.</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__iter__"><strong>__iter__</strong></a>(self)</dt><dd><tt>od.<a href="#QuestionBlock-__iter__">__iter__</a>()&nbsp;&lt;==&gt;&nbsp;iter(od)</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__ne__"><strong>__ne__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self!=value.</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__reduce__"><strong>__reduce__</strong></a>(self)</dt><dd><tt>Return&nbsp;state&nbsp;information&nbsp;for&nbsp;pickling</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>od.<a href="#QuestionBlock-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(od)</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__reversed__"><strong>__reversed__</strong></a>(self)</dt><dd><tt>od.<a href="#QuestionBlock-__reversed__">__reversed__</a>()&nbsp;&lt;==&gt;&nbsp;reversed(od)</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__setitem__"><strong>__setitem__</strong></a>(self, key, value, dict_setitem=&lt;slot wrapper '__setitem__' of 'dict' objects&gt;, proxy=&lt;built-in function proxy&gt;, Link=&lt;class 'collections._Link'&gt;)</dt><dd><tt>od.<a href="#QuestionBlock-__setitem__">__setitem__</a>(i,&nbsp;y)&nbsp;&lt;==&gt;&nbsp;od[i]=y</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__sizeof__"><strong>__sizeof__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="QuestionBlock-clear"><strong>clear</strong></a>(self)</dt><dd><tt>od.<a href="#QuestionBlock-clear">clear</a>()&nbsp;-&gt;&nbsp;None.&nbsp;&nbsp;Remove&nbsp;all&nbsp;items&nbsp;from&nbsp;od.</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-copy"><strong>copy</strong></a>(self)</dt><dd><tt>od.<a href="#QuestionBlock-copy">copy</a>()&nbsp;-&gt;&nbsp;a&nbsp;shallow&nbsp;copy&nbsp;of&nbsp;od</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-items"><strong>items</strong></a>(self)</dt><dd><tt>D.<a href="#QuestionBlock-items">items</a>()&nbsp;-&gt;&nbsp;a&nbsp;set-like&nbsp;<a href="builtins.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;items</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-keys"><strong>keys</strong></a>(self)</dt><dd><tt>D.<a href="#QuestionBlock-keys">keys</a>()&nbsp;-&gt;&nbsp;a&nbsp;set-like&nbsp;<a href="builtins.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;keys</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-move_to_end"><strong>move_to_end</strong></a>(self, key, last=True)</dt><dd><tt>Move&nbsp;an&nbsp;existing&nbsp;element&nbsp;to&nbsp;the&nbsp;end&nbsp;(or&nbsp;beginning&nbsp;if&nbsp;last==False).<br>
+&nbsp;<br>
+Raises&nbsp;KeyError&nbsp;if&nbsp;the&nbsp;element&nbsp;does&nbsp;not&nbsp;exist.<br>
+When&nbsp;last=True,&nbsp;acts&nbsp;like&nbsp;a&nbsp;fast&nbsp;version&nbsp;of&nbsp;self[key]=self.<a href="#QuestionBlock-pop">pop</a>(key).</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-pop"><strong>pop</strong></a>(self, key, default=&lt;object object at 0x0000000003333070&gt;)</dt><dd><tt>od.<a href="#QuestionBlock-pop">pop</a>(k[,d])&nbsp;-&gt;&nbsp;v,&nbsp;remove&nbsp;specified&nbsp;key&nbsp;and&nbsp;return&nbsp;the&nbsp;corresponding<br>
+value.&nbsp;&nbsp;If&nbsp;key&nbsp;is&nbsp;not&nbsp;found,&nbsp;d&nbsp;is&nbsp;returned&nbsp;if&nbsp;given,&nbsp;otherwise&nbsp;KeyError<br>
+is&nbsp;raised.</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-popitem"><strong>popitem</strong></a>(self, last=True)</dt><dd><tt>od.<a href="#QuestionBlock-popitem">popitem</a>()&nbsp;-&gt;&nbsp;(k,&nbsp;v),&nbsp;return&nbsp;and&nbsp;remove&nbsp;a&nbsp;(key,&nbsp;value)&nbsp;pair.<br>
+Pairs&nbsp;are&nbsp;returned&nbsp;in&nbsp;LIFO&nbsp;order&nbsp;if&nbsp;last&nbsp;is&nbsp;true&nbsp;or&nbsp;FIFO&nbsp;order&nbsp;if&nbsp;false.</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-setdefault"><strong>setdefault</strong></a>(self, key, default=None)</dt><dd><tt>od.<a href="#QuestionBlock-setdefault">setdefault</a>(k[,d])&nbsp;-&gt;&nbsp;od.<a href="#QuestionBlock-get">get</a>(k,d),&nbsp;also&nbsp;set&nbsp;od[k]=d&nbsp;if&nbsp;k&nbsp;not&nbsp;in&nbsp;od</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-update"><strong>update</strong></a>(*args, **kwds)</dt><dd><tt>D.<a href="#QuestionBlock-update">update</a>([E,&nbsp;]**F)&nbsp;-&gt;&nbsp;None.&nbsp;&nbsp;Update&nbsp;D&nbsp;from&nbsp;mapping/iterable&nbsp;E&nbsp;and&nbsp;F.<br>
+If&nbsp;E&nbsp;present&nbsp;and&nbsp;has&nbsp;a&nbsp;.<a href="#QuestionBlock-keys">keys</a>()&nbsp;method,&nbsp;does:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;k&nbsp;in&nbsp;E:&nbsp;D[k]&nbsp;=&nbsp;E[k]<br>
+If&nbsp;E&nbsp;present&nbsp;and&nbsp;lacks&nbsp;.<a href="#QuestionBlock-keys">keys</a>()&nbsp;method,&nbsp;does:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(k,&nbsp;v)&nbsp;in&nbsp;E:&nbsp;D[k]&nbsp;=&nbsp;v<br>
+In&nbsp;either&nbsp;case,&nbsp;this&nbsp;is&nbsp;followed&nbsp;by:&nbsp;for&nbsp;k,&nbsp;v&nbsp;in&nbsp;F.<a href="#QuestionBlock-items">items</a>():&nbsp;D[k]&nbsp;=&nbsp;v</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-values"><strong>values</strong></a>(self)</dt><dd><tt>D.<a href="#QuestionBlock-values">values</a>()&nbsp;-&gt;&nbsp;an&nbsp;<a href="builtins.html#object">object</a>&nbsp;providing&nbsp;a&nbsp;view&nbsp;on&nbsp;D's&nbsp;values</tt></dd></dl>
+
+<hr>
+Class methods inherited from <a href="collections.html#OrderedDict">collections.OrderedDict</a>:<br>
+<dl><dt><a name="QuestionBlock-fromkeys"><strong>fromkeys</strong></a>(iterable, value=None)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>OD.<a href="#QuestionBlock-fromkeys">fromkeys</a>(S[,&nbsp;v])&nbsp;-&gt;&nbsp;New&nbsp;ordered&nbsp;dictionary&nbsp;with&nbsp;keys&nbsp;from&nbsp;S.<br>
+If&nbsp;not&nbsp;specified,&nbsp;the&nbsp;value&nbsp;defaults&nbsp;to&nbsp;None.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="collections.html#OrderedDict">collections.OrderedDict</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="collections.html#OrderedDict">collections.OrderedDict</a>:<br>
+<dl><dt><strong>__hash__</strong> = None</dl>
+
+<hr>
+Methods inherited from <a href="builtins.html#dict">builtins.dict</a>:<br>
+<dl><dt><a name="QuestionBlock-__contains__"><strong>__contains__</strong></a>(self, key, /)</dt><dd><tt>True&nbsp;if&nbsp;D&nbsp;has&nbsp;a&nbsp;key&nbsp;k,&nbsp;else&nbsp;False.</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__ge__"><strong>__ge__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self&gt;=value.</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#QuestionBlock-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__gt__"><strong>__gt__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self&gt;value.</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__le__"><strong>__le__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self&lt;=value.</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__len__"><strong>__len__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;len(self).</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__lt__"><strong>__lt__</strong></a>(self, value, /)</dt><dd><tt>Return&nbsp;self&lt;value.</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="QuestionBlock-get"><strong>get</strong></a>(...)</dt><dd><tt>D.<a href="#QuestionBlock-get">get</a>(k[,d])&nbsp;-&gt;&nbsp;D[k]&nbsp;if&nbsp;k&nbsp;in&nbsp;D,&nbsp;else&nbsp;d.&nbsp;&nbsp;d&nbsp;defaults&nbsp;to&nbsp;None.</tt></dd></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Survey">class <strong>Survey</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Survey">Survey</a>&nbsp;tree&nbsp;made&nbsp;up&nbsp;of&nbsp;question&nbsp;blocks&nbsp;containing&nbsp;questions<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Survey-__init__"><strong>__init__</strong></a>(self, survey_path)</dt><dd><tt>Creates&nbsp;the&nbsp;survey&nbsp;tree&nbsp;from&nbsp;path&nbsp;to&nbsp;XML&nbsp;survey&nbsp;structure<br>
+&nbsp;<br>
+:param&nbsp;survey_path:&nbsp;relative&nbsp;or&nbsp;absolute&nbsp;path&nbsp;to&nbsp;XML&nbsp;file&nbsp;(.ssl)<br>
+:return:&nbsp;returns&nbsp;an&nbsp;instance&nbsp;of&nbsp;the&nbsp;survey&nbsp;class&nbsp;based&nbsp;on&nbsp;the&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="Survey-__iter__"><strong>__iter__</strong></a>(self)</dt><dd><tt>Piggy&nbsp;backs&nbsp;on&nbsp;recursive&nbsp;<a href="#-yieldfrom">yieldfrom</a>()&nbsp;to&nbsp;create&nbsp;linear&nbsp;iterator</tt></dd></dl>
+
+<dl><dt><a name="Survey-canTerminate"><strong>canTerminate</strong></a>(self)</dt><dd><tt>Calculates&nbsp;if&nbsp;the&nbsp;survey&nbsp;can&nbsp;be&nbsp;finished&nbsp;and&nbsp;report&nbsp;data<br>
+&nbsp;<br>
+Runs&nbsp;through&nbsp;all&nbsp;questions&nbsp;remaining&nbsp;and&nbsp;if&nbsp;all&nbsp;relevances&nbsp;are&nbsp;below&nbsp;the&nbsp;<br>
+mandatory_threshold,&nbsp;returns&nbsp;true<br>
+:return:&nbsp;Returns&nbsp;true&nbsp;if&nbsp;all&nbsp;questions&nbsp;are&nbsp;below&nbsp;mandatory_threshold</tt></dd></dl>
+
+<dl><dt><a name="Survey-genScope"><strong>genScope</strong></a>(self)</dt><dd><tt>Generates&nbsp;scope&nbsp;of&nbsp;survey<br>
+&nbsp;<br>
+:return:&nbsp;Returns&nbsp;dictionary&nbsp;with&nbsp;names&nbsp;including<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-Questions<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-Variables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-Sensors</tt></dd></dl>
+
+<dl><dt><a name="Survey-get"><strong>get</strong></a>(self, index)</dt><dd><tt>Gets&nbsp;question&nbsp;at&nbsp;the&nbsp;specified&nbsp;index&nbsp;in&nbsp;the&nbsp;tree&nbsp;or&nbsp;None&nbsp;otherwise<br>
+&nbsp;<br>
+:param&nbsp;index:&nbsp;index&nbsp;of&nbsp;question&nbsp;in&nbsp;linear&nbsp;shape<br>
+:return:&nbsp;returns&nbsp;the&nbsp;question</tt></dd></dl>
+
+<dl><dt><a name="Survey-search"><strong>search</strong></a>(self, question_id)</dt><dd><tt>Gets&nbsp;question&nbsp;and&nbsp;index&nbsp;by&nbsp;question&nbsp;id</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-disp"><strong>disp</strong></a>(element, tabs=0)</dt></dl>
+ <dl><dt><a name="-evaluate"><strong>evaluate</strong></a>(script)</dt><dd><tt>Evaluates&nbsp;string&nbsp;script&nbsp;after&nbsp;replacing&nbsp;variables&nbsp;with&nbsp;usable&nbsp;values<br>
+&nbsp;<br>
+:return:&nbsp;Returns&nbsp;the&nbsp;result&nbsp;of&nbsp;the&nbsp;evaluation</tt></dd></dl>
+ <dl><dt><a name="-init_scripting"><strong>init_scripting</strong></a>(root, param_scope)</dt><dd><tt>Finds&nbsp;default-script&nbsp;tag&nbsp;and&nbsp;initializes&nbsp;context&nbsp;based&nbsp;on&nbsp;the&nbsp;value<br>
+&nbsp;<br>
+:param&nbsp;root:&nbsp;Document&nbsp;root&nbsp;(to&nbsp;find&nbsp;default-script)<br>
+:param&nbsp;scope:&nbsp;Dictionary&nbsp;containing&nbsp;scope&nbsp;for&nbsp;execution<br>
+:return:&nbsp;Returns&nbsp;(script-type&nbsp;string,&nbsp;scope)</tt></dd></dl>
+ <dl><dt><a name="-load_questions"><strong>load_questions</strong></a>(root)</dt><dd><tt>Loads&nbsp;the&nbsp;question&nbsp;tree&nbsp;from&nbsp;the&nbsp;root&nbsp;element&nbsp;of&nbsp;the&nbsp;XML&nbsp;tree<br>
+&nbsp;<br>
+:return:&nbsp;Returns&nbsp;a&nbsp;root&nbsp;element&nbsp;(instance&nbsp;of&nbsp;<a href="#QuestionBlock">QuestionBlock</a>&nbsp;containing<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;all&nbsp;elements&nbsp;in&nbsp;the&nbsp;tree)</tt></dd></dl>
+ <dl><dt><a name="-printdisp"><strong>printdisp</strong></a>(element, tabs=0)</dt></dl>
+ <dl><dt><a name="-tree_display_gen"><strong>tree_display_gen</strong></a>(root)</dt><dd><tt>Creates&nbsp;tree&nbsp;display&nbsp;of&nbsp;the&nbsp;root&nbsp;element<br>
+&nbsp;<br>
+Generates&nbsp;display&nbsp;recursively&nbsp;using&nbsp;_branch_gen()<br>
+:param&nbsp;root:&nbsp;root&nbsp;<a href="#QuestionBlock">QuestionBlock</a>&nbsp;of&nbsp;tree<br>
+:return:&nbsp;Returns&nbsp;a&nbsp;string&nbsp;representation&nbsp;of&nbsp;the&nbsp;tree</tt></dd></dl>
+ <dl><dt><a name="-yieldfrom"><strong>yieldfrom</strong></a>(item)</dt><dd><tt>Creates&nbsp;a&nbsp;linear&nbsp;iterator&nbsp;over&nbsp;tree&nbsp;shaped&nbsp;survey<br>
+&nbsp;<br>
+Called&nbsp;recursively&nbsp;&nbsp;&nbsp;&nbsp;<br>
+:param&nbsp;item:&nbsp;root&nbsp;element&nbsp;of&nbsp;branch</tt></dd></dl>
+</td></tr></table>
+</body></html>
