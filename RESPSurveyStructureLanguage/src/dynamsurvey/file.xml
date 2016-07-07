@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<survey id="exampleSurvey">
+	<name>Structure Design Example</name>
+
+	<languages>
+		<language>en</language>
+		<language>es</language>
+	</languages>
+	
+	<!-- Script language will most likely have to be javascript
+	for universality and especially for mobile applications -->
+	<script-default>python</script-default>
+	
+	<import name="np">numpy</import>
+	<import>math</import>
+	
+	<funct id="example_method">
+		<param>var</param>
+		<body>
+			print("Example method works %d" % var)
+			return var ** 2
+		</body>
+	</funct>
+	
+	<script>
+		example_method(5)
+	</script>
+	
+	<sensor id="temperature" type="hardware">
+		<!-- Any item which will provide data when called 
+		can be classified as a sensor -->
+		<source id="src">/dev/thermometer</source>
+		
+		<!-- This will vary largely between sensors 
+		depending on how they are set up
+		-return tags are automatically run as value tags
+		
+		Function calls with sensors -->
+		<return>src.query()</return>
+		
+		<!-- Default value for if the sensor is not available 
+		calls to the sensor will return null and cause problems 
+		if this is not provided -->
+		<default>25</default>
+	</sensor>
+	
+	<sensor id="previousAnswers" type="hardware">
+		<!-- sensor to connect to previous answers to this survey -->
+		<source id="src">127.0.0.1/exampleSurvey/demographics</source>
+		
+		<!-- This sensor has multiple values to be called; each has an id -->
+		<return id="avgIncome">np.average(src.income())</return>
+		<return id="avgAge">np.average(src.age())</return>
+	</sensor>
+	
+	<var id="random_var">
+		<value>math.random()</value>
+	</var>
+	
+	<var id="rand_squared">
+		<value>math.random() ** 2</value>
+	</var>
+	
+	<!-- Functions are not going to be supported because 
+	they can be defined within scripts -->
+	
+	<!-- Example function to add two parameters -->
+	<funct id="add">
+		<param>operand1</param>
+		<param>operand2</param>
+		<body>return operand1 + operand2</body>
+	</funct>
+	
+	<!-- Function to put value in range [0,1) -->
+	<funct id="normalize">
+		<param>variable</param>
+		<body>return 1 / (1 + math.exp(variable))</body>
+	</funct>
+	
+	<!-- Default is order linear but included here for example -->
+	<block id="demographics" order="linear">
+		<!-- question is similar to a subclass of sensor but with added 
+		functionality for administering and receiving responses -->
+		<question id="age" type="text/integer">
+			<text lang="en">How old are you?</text>
+			<text lang="es">¿Cuantos años tienes?</text>
+			<default>18</default>
+		</question>
+		
+		<question id="income" type="scale/sliding">
+			<!-- Range can be passed a start, stop, and interval to generate array -->
+			<range>0:300000:100</range>
+			<text lang="en">What is your approximate yearly income?</text>
+			<!-- Spanish translation not included for any following questions -->
+			<default>0</default>
+		</question>
+	</block>
+	
+	<!-- relative places all questions in a pool and picks the one with near greatest 
+	relevance. Gaussian says to use a gaussian random to pick from the questions sorted 
+	by relevance; stddev is the standard deviation used in the gaussian number; default 
+	is 1σ or 0.317310508 -->
+	<block id="adult" order="relative/gaussian" stddev="0.5">
+		<!-- prereqs are automatically processed like value tag
+		and must be equal to either True or False
+		Default language is javascript (or maybe not)
+		False prereqs make relevance automatically 0 -->
+		<prereq>demographics.age &gt;= 18</prereq>
+		
+		<question id="workHappiness" type="scale/interval">
+			<!-- Relevance is greater for higher incomes -->
+			<!-- income.max() is predefined function in question type file
+			this type of declaration can be customized (max finds maximum possible value) -->
+			<relevance>normalize(income / previousAnswers.avgIncome())</relevance>
+			
+			<!-- Range can also be passed an array of comma separated distinct values -->
+			<range>1, 2, 3, 4, 5, 6, 7, 8, 9, 10</range>
+			<text lang="en">On a scale of 1 to 10, how happy are you at your job?</text>
+			
+			<!-- Custom return statement returns the result of the answer >= 7
+			Default return just returns the raw number inputted -->
+			<return>this &gt;= 7</return>
+			<default>True</default>
+		</question>
+		
+		<!-- Multiple choice that allows multiple selections; displayed as radio options -->
+		<question id="unhappinessReason" type="choice/multiple" display="radio">
+			<!-- answered function tests if the question has been answered -->
+			<prereq>not workHappiness and answered(workHappiness)</prereq>
+			
+			<!-- position specifies where the question is to be placed - usually 
+			using relative positions (i.e. right after workHappiness) -->
+			<position>pos(workHappiness) + 1</position>
+			<text>Why are you unhappy at work?</text>
+			<choice>
+				<text>My boss is a jerk</text>
+			</choice>
+			<choice>
+				<text>I'm bored</text>
+			</choice>
+			<choice>
+				<text>I am a banana</text>
+			</choice>
+			<choice>
+				<!-- Don't take offense, it is only for example -->
+				<prereq>demographics.age &gt;= 80</prereq>
+				<text>My back hurts</text>
+			</choice>
+		</question>
+	</block>
+	
+	<block id="child">
+		<prereq>demographics.age &lt; 18</prereq>
+		<!-- question type void only displays information -->
+		<question type="void">
+			<text>I'm sorry, I'm afraid I can't let you do that. -Hal</text>
+		</question>
+	</block>
+	
+	<return id="name"></return>
+</survey>
