@@ -47,6 +47,8 @@ def evaluate(math_string, scope=globals()):
     
     new_list = []
     for i in range(0, len(math_list)):
+        # TODO transform string into list of terms
+        pass
 
 if __name__ == '__main__':
     math_str = "8 * |-var + 4| % 3 >= 0 and var ^ 2 == 36"
