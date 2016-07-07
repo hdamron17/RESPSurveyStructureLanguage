@@ -3,19 +3,11 @@
 	<!-- (mandatory) Survey name -->
 	<name>{Survey Name}</name>
 
-	<!-- (optional) default script type - only python is currently implemented -->
-	<script-default>python</script-default>
-
 	<!-- (optional, multiple) sensors to be used in calculations - sensor update 
 		possible values: * "start": only gets updated at startup remove -> * "use": 
 		system requests value only when needed * "constant": system updates value 
 		whenever available -->
 	<sensor id="{id}" update="{update}" />
-
-	<!-- (optional) script to be executed at startup to initialize any variables -->
-	<script>
-		{executable python script}
-	</script>
 
 	<!-- (mandatory) global relevance threshold above which questions are included 
 		(can be overridden) -->
@@ -46,7 +38,13 @@
 			by UI -->
 		<question id="{id}" type="{type defined in UI}">
 			<!-- (mandatory) question body text -->
-			<text>{Body text}</text>
+			<text>
+				{Body text}
+				<!-- Text can contain value tags which are evaluated before 
+					loading question -->
+				<value>{value to be evaluated and inserted here}</value>
+				{More body text}
+			</text>
 
 			<!-- (optional, multiple) prerequisites - multiple prereqs are connected 
 				using logical AND -->
@@ -84,4 +82,14 @@
 			<!-- # All other elements here are passed on to UI # -->
 		</question>
 	</block>
+	
+	<?ignore <!-- Language cannot be dependent on any programming language -->
+		<!-- (optional) default script type - only python is currently implemented -->
+		<script-default>python</script-default>
+
+		<!-- (optional) script to be executed at startup to initialize any variables -->
+		<script>
+			{executable python script}
+		</script>
+	?>
 </survey>
