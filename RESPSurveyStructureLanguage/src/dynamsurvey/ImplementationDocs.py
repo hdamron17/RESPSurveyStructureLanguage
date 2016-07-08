@@ -8,6 +8,7 @@ import warnings
 from collections import OrderedDict
 
 # Borrowed from code.activestate.com for marking functions as deprecated
+# # TODO Remove before final version
 def deprecated(func):
     """This is a decorator which can be used to mark functions
     as deprecated. It will result in a warning being emmitted
@@ -26,6 +27,11 @@ class UI_Interface(object):
     Interface to UI module
     
     Communicates questions and receives responses from UI
+    
+    Future implementation extensions that I'll likely never get to:
+        -registerKeys() method to check that the UI can handle all question types 
+            found in the XML file : not included because there is nothing you can 
+            do about it so why not just allow python to throw an error
     """
     
     def __init__(self, parent):
@@ -197,6 +203,12 @@ class Sensor_Interface(object):
     
     Communicates with module which contains connections to all sensors that the survey
     can access
+    
+    Future implementation extensions that I'll likely never get to:
+        -Back flow allowing engine to request sensor values instead of constantly 
+            updating variables which will be always available (for example, 
+            heavy calculations) : not included for simplicity and to avoid 
+            synchronization issues with possible back flow delay
     """
     
     def __init__(self, parent):
@@ -255,31 +267,90 @@ class DynamicSurvey(object):
             they would be used in xml math strings
     """
     
-    def __init__(self, survey_path):
+    def __init__(self, survey_path, save_state=None):
         """
         Constructor for DynamicSurvey class
         
         Completes the following tasks:
-            -Construct UI_ and Sensor_Interfaces, passing parent=self
-            -Parse survey_path to xml.etree.ElementTree
-            -Load QuestionBlock root from ElementTree
+            -construct UI_ and Sensor_Interfaces, passing parent=self
+            -parse survey_path to xml.etree.ElementTree
+            -load QuestionBlock root from ElementTree
             -load name, welcome_msg, and end_msg from ElementTree
+            -generate scope for survey variables
+            -initialize dictionary for answered questions
+            -load save_state if not None
+            
+            # TODO Finish planning survey constructor
         """
+        
+    def input_response(self, question_id, response, timestamp):
+        pass
     
 class QuestionBlock(OrderedDict):
     """
-    TODO
+    Block of questions with similar properties
+    
+    Extends OrderedDict because it has the same properties in that it is an ordered 
+    set of questions and/or question blocks called by id
+    
+    Variables:
+        -threshold: threshold above which block is relevant (overrides parent's 
+            value if not None)
+        -mandatory_threshold: threshold below which block may be discarded 
+            (overrides parent's value if not None)
+        -self is an ordered dictionary of questions and/or question blocks
+            accessed by self.get(index) or by traditional dictionary lookup
+    
+    Methods to be implemented later if needed:
+        -insert(index, item_id, item) : to insert item in dictionary at index
+        -add(item_id, item) : to make function call of adding items to dictionary
     """
+    
+    def remove(self, item_id):
+        """
+        Removes and returns value contained by item_id
+        
+        :return: Returns value formerly held at item_id
+        """
+        
+    def indexOf(self, item_id):
+        """
+        Finds index of item with item_id
+        
+        :return: Returns index of item_id in self.keys()
+        """
+        
+    def getByIndex(self, index):
+        """
+        Get key and value found at index
+        
+        :return: Returns tuple with (key, value)
+        """
     
 class Question(object):
     """
-    TODO
+    Represents a question loaded from an XML file
+    
+    Variables:
+        -text: list of strings and/or evaluables to create body text
+        -prereq: math string which yields boolean prerequisites
+        -relevance: math string holding relevance to be evaluated
+        -threshold: threshold above which question is relevant (overrides parent's 
+            value if not None)
+        -mandatory_threshold: threshold below which question may be discarded 
+            (overrides parent's value if not None)
+        -elements: dictionary of Element objects with variable-dependence
+        -question_data: dictionary containing any other data to be 
+            used by the UI module
+        -answered: boolean which is true if the question has been answered
+        -response: user response to question, None if unanswered
+        -response_time: timestamp of user response, None if unanswered
     """
-    def __init__(self, element):
+    def __init__(self, xml_element):
         """
         Constructor uses element from XML file
         
-        :param element: XML element from parsing - must contain:
+        :param xml_element: XML element from parsing - must contain:
             -question type
             -text (XML element with question body)
             -param: boolean script value
@@ -294,7 +365,13 @@ class Question(object):
         
 class Element(object):
     """
-    TODO
+    Element or group of elements which depends on survey variables
+    
+    Variables:
+        -prereq: math string which yields boolean prerequisites
+        -relevance: math string holding relevance to be evaluated
+        -element_data: dictionary containing any other data to be 
+            used by the UI module
     """
     
 def _evaluate(math_string, scope=globals()):
@@ -306,7 +383,7 @@ def _evaluate(math_string, scope=globals()):
             the exception of brackets and variable signs
         -evaluates to a single value
         -only uses the following operators (separated by order of ops):
-            ( ... ) traditional parentheses
+            ( ... )  traditional parentheses
             | ... |  absolute value brackets
             
             +x, -x  variable signs
@@ -315,7 +392,7 @@ def _evaluate(math_string, scope=globals()):
             
             x * y  multiplication
             x / y  division
-            x // y  integer division    # only yield integers
+            x // y  floor division    # only yield integers
             x % y  modulo function
             
             x + y  addition
