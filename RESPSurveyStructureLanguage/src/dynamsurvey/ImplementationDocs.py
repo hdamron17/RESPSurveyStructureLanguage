@@ -28,14 +28,19 @@ class UI_Interface(object):
     Communicates questions and receives responses from UI
     """
     
+    def __init__(self, parent):
+        """
+        Constructs interface with access to parent (instance of Dynamic Survey)
+        
+        This will be called by DynamicSurvey passing parent=self
+        """
+    
     def title(self):
         """
         Gets the survey title (formerly included in startup_data)
         
         :return: Returns string name of survey found in XML file
         """
-        # TODO
-        pass
     
     def startup_data(self):
         """
@@ -114,8 +119,6 @@ class UI_Interface(object):
         This method calls _recalculate() finds the changes between the two (if a text or value
             changes, the question is returned as if it were added)
         """
-        # TODO
-        pass
     
     def quit(self):
         """
@@ -127,8 +130,6 @@ class UI_Interface(object):
                 -current set of display questions (to prevent deletion of questions 
                     proved irrelevant)
         """
-        # TODO
-        pass
     
     def wecome_message(self):
         """
@@ -160,8 +161,6 @@ class UI_Interface(object):
         The dictionary value for question_id is added or modified with 
             response and timestamp as a tuple
         """
-        # TODO
-        pass
     
     def _recalculate(self):
         """
@@ -191,8 +190,6 @@ class UI_Interface(object):
             to test if survey is finished
         -Returns the list of questions to be displayed in format above
         """
-        # TODO
-        pass
 
 class Sensor_Interface(object):
     """
@@ -201,6 +198,13 @@ class Sensor_Interface(object):
     Communicates with module which contains connections to all sensors that the survey
     can access
     """
+    
+    def __init__(self, parent):
+        """
+        Constructs interface with access to parent (instance of Dynamic Survey)
+        
+        This will be called by DynamicSurvey passing parent=self
+        """
     
     def neededSensors(self):
         """
@@ -213,8 +217,6 @@ class Sensor_Interface(object):
         Example return:
         ["thermometer", "gps_location", "avg_height"]
         """
-        # TODO
-        pass
     
     def update(self, sensor_id, value):
         """
@@ -224,8 +226,6 @@ class Sensor_Interface(object):
         :param value: value to be saved in cache for sensor_id (can be any raw type, 
             including array)
         """
-        # TODO
-        pass
     
     def get_variable(self, variable_id):
         """
@@ -235,7 +235,7 @@ class Sensor_Interface(object):
             variable does not exist
         """
     
-class DynamicSurvey(OrderedDict):
+class DynamicSurvey(object):
     """
     Class to contain survey root and interface methods
     
@@ -246,13 +246,35 @@ class DynamicSurvey(OrderedDict):
     Variables:
         ui: UI_Interface which will communicate with UI module
         sensors: Sensor_Interface which will communicate with sensors module
+        root: root element of survey data structure (instance of QuestionBlock)
+            -contains global threshold and mandatory_threshold
+        name: name of survey
+        welcome_msg: (optional) welcome message
+        end_msg: (optional) end message
+        scope: dictionary of available variables with names in the form that 
+            they would be used in xml math strings
     """
     
+    def __init__(self, survey_path):
+        """
+        Constructor for DynamicSurvey class
+        
+        Completes the following tasks:
+            -Construct UI_ and Sensor_Interfaces, passing parent=self
+            -Parse survey_path to xml.etree.ElementTree
+            -Load QuestionBlock root from ElementTree
+            -load name, welcome_msg, and end_msg from ElementTree
+        """
+    
 class QuestionBlock(OrderedDict):
-    # TODO
-    pass
+    """
+    TODO
+    """
     
 class Question(object):
+    """
+    TODO
+    """
     def __init__(self, element):
         """
         Constructor uses element from XML file
@@ -271,3 +293,51 @@ class Question(object):
         """
         
 class Element(object):
+    """
+    TODO
+    """
+    
+def _evaluate(math_string, scope=globals()):
+    """
+    Evaluates math_string with access to variables in scope
+    
+    :param math_string: string containing math with rules:
+        -values and operators are separated by spaces with 
+            the exception of brackets and variable signs
+        -evaluates to a single value
+        -only uses the following operators (separated by order of ops):
+            ( ... ) traditional parentheses
+            | ... |  absolute value brackets
+            
+            +x, -x  variable signs
+            
+            x ^ y  powers
+            
+            x * y  multiplication
+            x / y  division
+            x // y  integer division    # only yield integers
+            x % y  modulo function
+            
+            x + y  addition
+            x - y  subtraction
+            
+            # only yield booleans
+            x > y  greater than
+            x >= y  greater than or equal to
+            x == y  compares if equal
+            x <= y  less than or equal to
+            x < y  less than
+            
+            # can only apply to booleans
+            not x  logical NOT
+            x and y  logical AND
+        -reserves keywords:
+            not
+            and
+            or
+            true
+            false
+    
+    :param scope: dictionary of variables which mathString can access
+    :return: returns numerical or boolean value of evaluated string
+    """

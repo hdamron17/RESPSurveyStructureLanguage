@@ -10,7 +10,7 @@ and communicates with a display program via local protocols
 '''
 
 import xml.etree.ElementTree as ET
-import js2py
+# import js2py
 from collections import OrderedDict
 
 class Survey(object):
@@ -147,7 +147,7 @@ def init_scripting(root, param_scope):
     
     if script_type == "javascript":
         global context
-        context = js2py.EvalJs(scope)
+#         context = js2py.EvalJs(scope)
     else:
         assert script_type == "python" or script_type == None, \
                 "Unusable scripting language"
@@ -283,7 +283,8 @@ class MyTestIterable(QuestionBlock):
     
     def id(self):
         return self.name
-    
+
+# Deprecated because of language independence day ( 7 Juli, 2016 )
 def evaluate(script):
     """
     Evaluates string script after replacing variables with usable values

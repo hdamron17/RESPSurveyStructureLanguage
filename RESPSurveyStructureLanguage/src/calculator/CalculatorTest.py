@@ -61,4 +61,4 @@ if __name__ == '__main__':
     scp = {"var" : 6}
     
     # Should yield True
-    print(evaluate(math_str, scp))
+    print(_evaluate(math_str, scp))
