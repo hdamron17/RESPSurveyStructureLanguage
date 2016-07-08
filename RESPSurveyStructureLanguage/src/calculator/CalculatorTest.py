@@ -4,7 +4,7 @@ Created on Jul 7, 2016
 @author: ei-student
 '''
 
-def evaluate(math_string, scope=globals()):
+def _evaluate(math_string, scope=globals()):
     """
     Evaluates math_string with access to variables in scope
     

@@ -16,6 +16,12 @@
 	<!-- (mandatory) global relevance threshold below which questions can be 
 		ignored (can be overridden) -->
 	<mandatory>{eval mandatory threshold}</mandatory>
+	
+	<!-- (optional) welcome message -->
+	<welcome>{welcome message}</welcome>
+	
+	<!-- (optional) end message -->
+	<end>{end message}</end>
 
 	<!-- (mandatory, multiple) block of questions with common attributes -->
 	<block id="{id}">
