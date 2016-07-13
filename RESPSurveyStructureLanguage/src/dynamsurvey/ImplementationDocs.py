@@ -292,7 +292,7 @@ class DynamicSurvey(object):
         Iterates through all questions and loads answered questions into 
             dictionary to be saved in pickle
         Questions stored in pickled format {"id": (data, timestamp), ...}
-        :param path: save state destination (should have pkl extension
+        :param path: save state destination (should have pkl extension)
             If path is None, the survey is stored within the application 
             at %SURVEY_ID%-%SAVE_TIME%.pkl
         """
